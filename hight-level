@@ -1,0 +1,13 @@
+from pathlib import Path
+import zipfile
+
+def backup(source="C:/Student/131-23", target="backup.zip"):
+    """Высокоуровневая функция бэкапа"""
+    with zipfile.ZipFile(target, 'w') as z:
+        [z.write(f, f.relative_to(Path(source).parent)) 
+         for f in Path(source).rglob('*') if f.is_file()]
+    print(f"Бэкап создан: {target}")
+
+# Запуск
+backup(input("Откуда: ") or "C:/131-23", 
+       input("Куда: ") or "backup.zip")
